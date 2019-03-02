@@ -1,0 +1,52 @@
+#!/bin/sh
+
+: '
+runProgram.sh - I made this script to execute any Java file that 
+                I use. In order to use the script, just change 
+                the java file, the java tester at the top of 
+                the file. 
+                @author Ivan Martinez Morales
+                for CSC205
+' :
+
+# VARIABLES - CHANGE THE JAVA FILE AND THE JAVA TESTER AS NEEDED.
+java_file="${1}.java"
+java_tester_file="${1}Tester.java"
+java_tester="${1}Tester"
+
+RED='\033[0;32m'
+NC='\033[0m' # No Color
+
+clear
+
+if [[ $java_file == ".java" ]]; then
+    echo "You did not provide a file name.  Please enter the file name like this:  run-java-program <classname>"
+    exit
+
+else
+    # SCRIPT PARTS
+    echo "😎  Compiling Java file: ${RED}${java_file}${NC}... Please wait."
+        javac $java_file || exit $1
+    if [[ $2 == "--no-tester" ]]; then
+        echo "🤷‍  No Tester included, that's okay.  Executing ${1}.\n\n"
+        echo "......................BEGIN PROGRAM ${1}......................"
+        echo "\n\n" 
+        java ${1}
+        echo "\n\n"
+
+    else
+        echo "👍  Compiled successfully.  Now compiling ${RED}${java_tester_file}${NC}"
+        javac $java_tester_file || exit $1
+
+        echo "🤯  Compiled tester successfully.  Now executing ${RED}${java_tester}${NC}... Please wait.\n\n"
+        echo "......................BEGIN PROGRAM ${java_tester}......................"
+        echo "\n\n"
+        java $java_tester || exit $1
+        echo "\n\n"
+    fi
+fi
+
+# TODO: Add man pages
+# TODO: Add feature to use multiple files per script. Maybe include a flag --explicit ?
+# TODO: Add more user friendly features.  Maybe it would be good if the user could manipulate the script mid-sentence.
+# TODO: Add better error handling features for files that might just not be there.  Maybe do that with a python script.

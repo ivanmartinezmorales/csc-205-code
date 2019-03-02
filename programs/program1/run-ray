@@ -1,0 +1,30 @@
+#!/bin/sh
+
+clear
+if [[ $1 == "--verbose" ]]; then
+    echo "😈  Now compiling Point.java"
+    javac Point.java || exit $1
+    echo "🧶  Compiled successfully."
+
+    echo "🌮  Compiling Ray.java...  Please wait... "
+    javac Ray.java || exit $1
+    echo "🥴  Compiled Ray.java successfully."
+
+    echo "🥑  Now compiling RayTester.java...  Please wait."
+    javac RayTester.java || exit $1
+    echo "⭐️  RayTester.java compiled successfully."
+    echo "🥥  Now executing RayTester.java...  Hold up bro."
+
+else
+    echo "Starting tester... Please wait."
+    javac Point.java || exit
+    javac Ray.java || exit
+    javac RayTester.java || exit
+fi
+
+echo "\n\n"
+echo "====================  🎱  BEGIN PROGRAM RayTester  🎱  =================="
+echo "\n\n"
+java RayTester || exit $1
+echo "\n\n"
+echo "====================  🎱  END PROGRAM RayTester  🎱  =================== "
