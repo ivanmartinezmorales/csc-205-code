@@ -83,9 +83,7 @@ public class StyleRay extends Ray implements StyleRayInterface {
      * If the rayStyle is a double, return "endPoint=====>Direction"
      * If the rayStyle is dashed, return "endPoint----->Direction" (from the parent class)
      * If the rayStyle is dotted, return "endPoint.....>Direction"
-     * In any instance, return five middle-man characters.
-     * 
-     * 
+     * In any instance, return five middle-man characters
      */
     @Override
     public String toString() {
