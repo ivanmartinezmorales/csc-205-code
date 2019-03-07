@@ -101,6 +101,7 @@ public class EvenDeck implements EvenDeckInterface {
 
         // DO THE PERFECT SHUFFLE (techno music plays)
         for (int i = 0; i < half; i++) {
+            
             cardDeck.set((2 * i), cardDeckCopy.get(i));
             cardDeck.set((2*i+1), cardDeckCopy.get(i + half));
         }
