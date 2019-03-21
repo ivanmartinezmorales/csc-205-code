@@ -30,6 +30,7 @@ public class MazeSolver {
 
         else if (userInput.equalsIgnoreCase('s')) {
             // TODO: Do serialization stuff
+            // Read the README... s
             
         } else if (userInput == "") {
             
