@@ -30,7 +30,7 @@ public class MazeSolver {
 
         else if (userInput.equalsIgnoreCase('s')) {
             // TODO: Do serialization stuff
-            // Read the README... s
+                // Read the README... s
             
         } else if (userInput == "") {
             
@@ -38,50 +38,66 @@ public class MazeSolver {
             if (aMaze.isOpen(Direction.DOWN) && !positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()]) {
 
                 aMaze.move(Direction.DOWN);
+
+                System.out.println("Moved DOWN.");
                 directionStack.push(Direction.DOWN);
                 positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()] = true;
 
             } else if (aMaze.isOpen(Direction.RIGHT) && !positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()]) {
 
                 aMaze.move(Direction.RIGHT);
+
+                System.out.println("Moved RIGHT.");
                 directionStack.push(Direction.RIGHT);
                 positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()] = true;
 
             } else if (aMaze.isOpen(Direction.LEFT) && !positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()]) {
 
                 aMaze.move(Direction.LEFT);
+
+                System.out.println("Moved LEFT.");
                 directionStack.push(Direction.LEFT);
                 positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()] = true;
 
             } else if (aMaze.isOpen(Direction.UP) && !positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()]) {
 
                 aMaze.move(Direction.UP);
+
+                System.out.println("Moved UP.");
                 directionStack.push(Direction.UP);
                 positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()] = true;
 
 
             } else {
+
                 // 1. Popping the stack.
+                temp = directionStack.pop();
+                System.out.println("Popped the stack!")
                 // 2. Run the direction that's popped throught the switch.
-                switch (Direction) {
+                switch (temp) {
+
                     case Direction.UP:
                         
+                        aMaze.move(Direction.DOWN);
+                        System.out.println("Moving in the opposite direction: DOWN");
                         break;
                     
                     case Direction.DOWN:
-
+                        aMaze.move(Direction.UP);
+                        System.out.println("Moving in the opposite direction: UP ");
                         break;
                     
                     case Direction.LEFT:
-
+                        aMaze.move(Direction.RIGHT);
+                        System.out.println("Moving in the opposite direction: RIGHT ");
                         break;
                     
                     case Direction.RIGHT:
-
+                        aMaze.move(Direction.LEFT);
+                        System.out.println("Moving in the opposite direction: LEFT ");
                         break;
 
                     default:
-
                         break;
                 }
             }            
