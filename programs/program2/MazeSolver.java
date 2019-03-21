@@ -20,89 +20,109 @@ public class MazeSolver {
     }
 
     // METHODS
-    public boolean Solve() {
+    public boolean solve() {
         
         do {
         // User decides to exit.
+        ; 
+
+        } while (!aMaze.goalReached());
+    }
+
+    private boolean solve(String userInput) {
+        
         if (userInput.equalsIgnoreCase('q')) {
             // Need to find a way to find a way to kill this program without using system.exit()
-        }
-
-        else if (userInput.equalsIgnoreCase('s')) {
+            System.exit(0);
+        } else if (userInput.equalsIgnoreCase('s')) {
             // TODO: Do serialization stuff
                 // Read the README... s
             
         } else if (userInput == "") {
             
             // Here's where the logic to get us our maze solver would go.
-            if (aMaze.isOpen(Direction.DOWN) && !positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()]) {
+            if (aMaze.isOpen(Direction.DOWN) && !positionArray[aMaze.getCurrentRow() + 1][aMaze.getCurrentCol()]) {
 
-                aMaze.move(Direction.DOWN);
+                moveMaze(Direction.DOWN);
 
-                System.out.println("Moved DOWN.");
-                directionStack.push(Direction.DOWN);
-                positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()] = true;
+            } else if (aMaze.isOpen(Direction.RIGHT) && !positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol() + 1]) {
 
-            } else if (aMaze.isOpen(Direction.RIGHT) && !positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()]) {
+                moveMaze(Direction.RIGHT);
 
-                aMaze.move(Direction.RIGHT);
+            } else if (aMaze.isOpen(Direction.LEFT) && !positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol() - 1]) {
 
-                System.out.println("Moved RIGHT.");
-                directionStack.push(Direction.RIGHT);
-                positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()] = true;
+                moveMaze(Direction.LEFT);
 
-            } else if (aMaze.isOpen(Direction.LEFT) && !positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()]) {
+            } else if (aMaze.isOpen(Direction.UP) && !positionArray[aMaze.getCurrentRow() - 1][aMaze.getCurrentCol()]) {
 
-                aMaze.move(Direction.LEFT);
-
-                System.out.println("Moved LEFT.");
-                directionStack.push(Direction.LEFT);
-                positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()] = true;
-
-            } else if (aMaze.isOpen(Direction.UP) && !positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()]) {
-
-                aMaze.move(Direction.UP);
-
-                System.out.println("Moved UP.");
-                directionStack.push(Direction.UP);
-                positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()] = true;
-
+                moveMaze(Direction.UP);
 
             } else {
 
-                // 1. Popping the stack.
-                temp = directionStack.pop();
-                System.out.println("Popped the stack!")
-                // 2. Run the direction that's popped throught the switch.
-                switch (temp) {
-
-                    case Direction.UP:
-                        
-                        aMaze.move(Direction.DOWN);
-                        System.out.println("Moving in the opposite direction: DOWN");
-                        break;
-                    
-                    case Direction.DOWN:
-                        aMaze.move(Direction.UP);
-                        System.out.println("Moving in the opposite direction: UP ");
-                        break;
-                    
-                    case Direction.LEFT:
-                        aMaze.move(Direction.RIGHT);
-                        System.out.println("Moving in the opposite direction: RIGHT ");
-                        break;
-                    
-                    case Direction.RIGHT:
-                        aMaze.move(Direction.LEFT);
-                        System.out.println("Moving in the opposite direction: LEFT ");
-                        break;
-
-                    default:
-                        break;
-                }
+                popDirection();
             }            
-        } 
-
-        } while (!aMaze.goalReached());
+        }
     }
+    /**
+     * Moves the maze in the given direction.
+     * @param direction - a direction, i.e. UP, DOWN, LEFT, RIGHT.
+     */
+    private void moveMaze(Direction direction) {
+
+        aMaze.move(direction);
+        System.out.println("Moved " + direction);
+        directionStack.push(direction);
+        moveBooleanArray();
+
+    }
+
+    /**
+     * Changes the visited Array's values to true for a given point.
+     */
+    private void moveBooleanArray() {
+
+        positionArray[aMaze.getCurrentRow()][aMaze.getCurrentCol()] = true;
+
+    }
+    
+    /**
+     * Method that goes in the reverse direction, from the top of the stack.
+     */
+    private void popDirection() {
+
+        // 1. Popping the stack.
+        poppedDirection = directionStack.pop();
+        System.out.println("Popped the stack!");
+
+        // 2. Run the direction that's popped throught the switch.
+        switch (poppedDirection) {
+
+            case Direction.UP:
+                
+                aMaze.move(Direction.DOWN);
+                System.out.println("Moving in the opposite direction: DOWN");
+                break;
+            
+            case Direction.DOWN:
+                aMaze.move(Direction.UP);
+                System.out.println("Moving in the opposite direction: UP ");
+                break;
+            
+            case Direction.LEFT:
+                aMaze.move(Direction.RIGHT);
+                System.out.println("Moving in the opposite direction: RIGHT ");
+                break;
+            
+            case Direction.RIGHT:
+                aMaze.move(Direction.LEFT);
+                System.out.println("Moving in the opposite direction: LEFT ");
+                break;
+
+            default:
+                break;
+        
+        }
+
+    }
+
 }
