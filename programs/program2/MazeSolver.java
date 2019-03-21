@@ -1,5 +1,9 @@
-public class MazeSolver {
+import java.io.*;
+
+public class MazeSolver implements Serializable {
     
+    private static final long serialVersionUID = 1L;
+
     // DATA
     private Stack<Direction> directionStack;
     private boolean[][] positionArray;
@@ -24,7 +28,7 @@ public class MazeSolver {
         
         do {
         // User decides to exit.
-        ; 
+            
 
         } while (!aMaze.goalReached());
     }
@@ -62,7 +66,33 @@ public class MazeSolver {
                 popDirection();
             }            
         }
+
     }
+
+    /**
+     * Serializes the maze and saves it to the file of the user's choosing.
+     */
+    private void serializeMaze() {
+        
+        System.out.println("Please tell me the name of the file you would like to write. ");
+        String outBoundFile = new Scanner(System.in).nextline().close(); // Closing the Scannvi
+        System.out.println("Saving file to: " + outBoundFile);
+
+        // Serializing the file, variable name keystone to the infamous keystone pipeline!
+        ObjectOutputStream keystone = new ObjectOutputStream(new FileOutputStream(outBoundFile));
+        keystone.writeObejct(this);
+        // Closing the keystone pipeline, very importante
+        keystone.close();
+    }
+
+    /**
+     * Quits the maze gracefully. TODO: Find out how to quit the maze gracefully without affecting the functionality of the tester.
+     */
+    private void quitMaze() {
+
+    }
+
+
     /**
      * Moves the maze in the given direction.
      * @param direction - a direction, i.e. UP, DOWN, LEFT, RIGHT.
