@@ -20,31 +20,40 @@ public class MazeSolver implements Serializable {
         directionStack = new Stack<Direction>();
         
         // 4. Set up trippy visuals (the maze, duh)
-
+        // TODO: SET UP MAZE VISUALS BRO
     }
 
     // METHODS
     public boolean solve() {
         
+        Scanner kb = new Scanner(System.in);
         do {
-        // User decides to exit.
-            
 
+            solve(kb.nextLine());
+            
         } while (!aMaze.goalReached());
     }
 
-    private boolean solve(String userInput) {
+    private void solve(String userInput) {
         
         if (userInput.equalsIgnoreCase('q')) {
             // Need to find a way to find a way to kill this program without using system.exit()
-            System.exit(0);
+            quitMaze();
+
         } else if (userInput.equalsIgnoreCase('s')) {
-            // TODO: Do serialization stuff
-                // Read the README... s
             
+            serializeMaze();
+
         } else if (userInput == "") {
             
-            // Here's where the logic to get us our maze solver would go.
+            /**
+             * Navigating the maze: 
+             * - First, check if DOWN is open and unvisited, then go down. Do the same thing for each direction in 
+             *   this order: DOWN, RIGHT, LEFT, UP.
+             * - If we meet that condition, then call moveMaze(Direction [direction]).
+             * - If we're backed up in a corner, then call popDirection() to go back the way you came.
+             */
+
             if (aMaze.isOpen(Direction.DOWN) && !positionArray[aMaze.getCurrentRow() + 1][aMaze.getCurrentCol()]) {
 
                 moveMaze(Direction.DOWN);
@@ -74,14 +83,15 @@ public class MazeSolver implements Serializable {
      */
     private void serializeMaze() {
         
+        // Acquiring the file name        
         System.out.println("Please tell me the name of the file you would like to write. ");
-        String outBoundFile = new Scanner(System.in).nextline().close(); // Closing the Scannvi
+        String outBoundFile = new Scanner(System.in).nextline(); // Scanner is closed because its only temporarily instantiated
         System.out.println("Saving file to: " + outBoundFile);
 
         // Serializing the file, variable name keystone to the infamous keystone pipeline!
         ObjectOutputStream keystone = new ObjectOutputStream(new FileOutputStream(outBoundFile));
         keystone.writeObejct(this);
-        // Closing the keystone pipeline, very importante
+        // Closing the keystone pipeline, very importante as we don't want to leak that precious oil.
         keystone.close();
     }
 
@@ -89,7 +99,8 @@ public class MazeSolver implements Serializable {
      * Quits the maze gracefully. TODO: Find out how to quit the maze gracefully without affecting the functionality of the tester.
      */
     private void quitMaze() {
-
+        System.out.println("Now leaving maze. Goodbye!");
+        // TODO: Add feature to exit maze.
     }
 
 
