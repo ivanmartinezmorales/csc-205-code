@@ -24,6 +24,9 @@ public class MazeSolver implements Serializable {
     }
 
     // METHODS
+    /**
+    * Method that solves the maze with the do-while loop. Outward facing method in entire class.
+    */
     public boolean solve() {
         
         Scanner kb = new Scanner(System.in);
@@ -33,7 +36,11 @@ public class MazeSolver implements Serializable {
             
         } while (!aMaze.goalReached());
     }
-
+    
+    /**
+    * solves the Maze one step at a time, with userInput.
+    * @param userInput, given from the user.
+    */
     private void solve(String userInput) {
         
         if (userInput.equalsIgnoreCase('q')) {
@@ -96,11 +103,12 @@ public class MazeSolver implements Serializable {
     }
 
     /**
-     * Quits the maze gracefully. TODO: Find out how to quit the maze gracefully without affecting the functionality of the tester.
+     * Quits the maze gracefully.
      */
     private void quitMaze() {
+        
         System.out.println("Now leaving maze. Goodbye!");
-        // TODO: Add feature to exit maze.
+
     }
 
 
