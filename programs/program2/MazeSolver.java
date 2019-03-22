@@ -20,7 +20,7 @@ public class MazeSolver implements Serializable {
         directionStack = new Stack<Direction>();
         
         // 4. Set up trippy visuals (the maze, duh)
-        // TODO: SET UP MAZE VISUALS BRO
+        // SET UP MAZE VISUALS BRO
     }
 
     // METHODS
