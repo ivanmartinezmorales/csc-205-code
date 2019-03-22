@@ -68,7 +68,6 @@ public class EvenDeck implements EvenDeckInterface {
      * @param obj Reference Object we're comparin'
      * @return True if the EvenDeck is the same as the obj argument; false otherwise.
      */
-    @Override
     public boolean equals(Object obj) {
 
         // CASE 1: obj is null
