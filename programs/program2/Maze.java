@@ -377,11 +377,11 @@ public class Maze implements java.io.Serializable
 
 	//***********************************************************************
 
-	//This is Maze's enumerated data type: moves can be UP, DOWN, LEFT, RIGHT
-//	public enum Direction implements java.io.Serializable
-//	{
-//		UP, DOWN, LEFT, RIGHT
-//	}
+	// This is Maze's enumerated data type: moves can be UP, DOWN, LEFT, RIGHT
+	// public enum Direction implements java.io.Serializable
+	// {
+	// 	UP, DOWN, LEFT, RIGHT
+	// }
 
 	//***********************************************************************
 

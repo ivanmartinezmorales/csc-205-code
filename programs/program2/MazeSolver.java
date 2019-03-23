@@ -1,38 +1,50 @@
 import java.io.*;
+import java.util.*;
 
 public class MazeSolver implements Serializable {
     
-    private static final long serialVersionUID = 1L;
 
     // DATA
     private Stack<Direction> directionStack;
     private boolean[][] positionArray;
     private Maze aMaze;
-    
+    private static MazeDisplay display;
+    private Scanner kb;
+
+
     // CONSTRUCTORS
     public MazeSolver(int numRows, int numCols) {
         
+        // 0. Set up Scanner
+        this.kb = new Scanner(System.in);
+
         // 1. Set up the maze.
-        aMaze = new Maze(numRows, numCols);
+        this.aMaze = new Maze(numRows, numCols);
+
         // 2. Set up positionArray
-        positionArray = new boolean[numRows][numCols];
+        this.positionArray = new boolean[numRows][numCols];
+
         // 3. Set up directionStack;
-        directionStack = new Stack<Direction>();
-        
+        this.directionStack = new Stack<Direction>();
+
         // 4. Set up trippy visuals (the maze, duh)
-        // SET UP MAZE VISUALS BRO
+        display = new MazeDisplay(aMaze);
+        aMaze.buildMaze(0);
+        aMaze.setSolveAnimationDelay(1);
+
     }
 
     // METHODS
     /**
     * Method that solves the maze with the do-while loop. Outward facing method in entire class.
     */
-    public boolean solve() {
+    public void solve() throws FileNotFoundException, IOException {
         
-        Scanner kb = new Scanner(System.in);
+        String userInput = kb.nextLine();
+
         do {
 
-            solve(kb.nextLine());
+            this.solve(userInput);
             
         } while (!aMaze.goalReached());
     }
@@ -40,16 +52,20 @@ public class MazeSolver implements Serializable {
     /**
     * solves the Maze one step at a time, with userInput.
     * @param userInput, given from the user.
+     * @throws IOException
+     * @throws FileNotFoundException
     */
-    private void solve(String userInput) {
+    private void solve(String userInput) throws FileNotFoundException, IOException {
         
-        if (userInput.equalsIgnoreCase('q')) {
+        if (userInput.matches("[Qq]{1}")) {
             // Need to find a way to find a way to kill this program without using system.exit()
             quitMaze();
 
-        } else if (userInput.equalsIgnoreCase('s')) {
+        } else if (userInput.matches("[Ss]{1}")) {
             
-            serializeMaze();
+            System.out.println("Please tell me the name of the file you'd like to write.");
+            String outboundFileName = kb.nextLine();
+            serializeMaze(outboundFileName);
 
         } else if (userInput == "") {
             
@@ -80,26 +96,30 @@ public class MazeSolver implements Serializable {
             } else {
 
                 popDirection();
-            }            
+            }
+
         }
 
     }
 
     /**
      * Serializes the maze and saves it to the file of the user's choosing.
+     * @throws IOException
+     * @throws FileNotFoundException
+     * @param fileName name of the file to record
      */
-    private void serializeMaze() {
+    private void serializeMaze(String fileName) throws FileNotFoundException, IOException {
         
         // Acquiring the file name        
-        System.out.println("Please tell me the name of the file you would like to write. ");
-        String outBoundFile = new Scanner(System.in).nextline(); // Scanner is closed because its only temporarily instantiated
-        System.out.println("Saving file to: " + outBoundFile);
+        System.out.println("Saving file to: " + fileName);
 
         // Serializing the file, variable name keystone to the infamous keystone pipeline!
-        ObjectOutputStream keystone = new ObjectOutputStream(new FileOutputStream(outBoundFile));
-        keystone.writeObejct(this);
+        ObjectOutputStream keystone = new ObjectOutputStream(new FileOutputStream(fileName));
+        keystone.writeObject(this);
+
         // Closing the keystone pipeline, very importante as we don't want to leak that precious oil.
         keystone.close();
+
     }
 
     /**
@@ -113,7 +133,7 @@ public class MazeSolver implements Serializable {
 
 
     /**
-     * Moves the maze in the given direction.
+     * Moves the maze in the givend
      * @param direction - a direction, i.e. UP, DOWN, LEFT, RIGHT.
      */
     private void moveMaze(Direction direction) {
@@ -140,29 +160,29 @@ public class MazeSolver implements Serializable {
     private void popDirection() {
 
         // 1. Popping the stack.
-        poppedDirection = directionStack.pop();
+        Direction poppedDirection = directionStack.pop();
         System.out.println("Popped the stack!");
 
         // 2. Run the direction that's popped throught the switch.
         switch (poppedDirection) {
 
-            case Direction.UP:
+            case UP:
                 
                 aMaze.move(Direction.DOWN);
                 System.out.println("Moving in the opposite direction: DOWN");
                 break;
             
-            case Direction.DOWN:
+            case DOWN:
                 aMaze.move(Direction.UP);
-                System.out.println("Moving in the opposite direction: UP ");
+                System.out.println("");
                 break;
             
-            case Direction.LEFT:
+            case LEFT:
                 aMaze.move(Direction.RIGHT);
-                System.out.println("Moving in the opposite direction: RIGHT ");
+                System.out.println("Moving in the ");
                 break;
             
-            case Direction.RIGHT:
+            case RIGHT:
                 aMaze.move(Direction.LEFT);
                 System.out.println("Moving in the opposite direction: LEFT ");
                 break;
