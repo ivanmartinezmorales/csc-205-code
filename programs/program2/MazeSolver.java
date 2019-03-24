@@ -31,6 +31,8 @@ public class MazeSolver implements Serializable {
         display = new MazeDisplay(aMaze);
         aMaze.buildMaze(0);
         aMaze.setSolveAnimationDelay(1);
+        System.out.println("End of Maze Solver Constructor");
+
 
     }
 
@@ -40,13 +42,13 @@ public class MazeSolver implements Serializable {
     */
     public void solve() throws FileNotFoundException, IOException {
         
-        String userInput = kb.nextLine();
-
         do {
 
-            this.solve(userInput);
+            solve(kb.nextLine());
             
         } while (!aMaze.goalReached());
+
+        System.out.println("Completed Maze!");
     }
     
     /**
@@ -67,7 +69,7 @@ public class MazeSolver implements Serializable {
             String outboundFileName = kb.nextLine();
             serializeMaze(outboundFileName);
 
-        } else if (userInput == "") {
+        } else if (userInput.isEmpty()) {
             
             /**
              * Navigating the maze: 
@@ -96,6 +98,7 @@ public class MazeSolver implements Serializable {
             } else {
 
                 popDirection();
+
             }
 
         }
@@ -126,7 +129,7 @@ public class MazeSolver implements Serializable {
      * Quits the maze gracefully.
      */
     private void quitMaze() {
-        
+        display.dispose(); 
         System.out.println("Now leaving maze. Goodbye!");
 
     }

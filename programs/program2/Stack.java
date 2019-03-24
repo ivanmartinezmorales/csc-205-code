@@ -9,7 +9,7 @@ import java.util.EmptyStackException;
 * ClassworkStack is due at the next class period at the end of class.*/
 
 
-public class Stack<E> {
+public class Stack<E> implements java.io.Serializable {
     // data
     private ArrayList<E> stack;
 

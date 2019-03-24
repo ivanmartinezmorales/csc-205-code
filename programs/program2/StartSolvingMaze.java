@@ -6,7 +6,12 @@ public class StartSolvingMaze {
 
         MazeSolver solveMaze = new MazeSolver(5, 5);
         System.out.println("Created new maze.");
-        solveMaze.solve();
+        try {
+            solveMaze.solve();
+        } catch (Exception ex) {
+            System.out.println("Exception found." + ex);
+        }
+        
         }
     }
     
