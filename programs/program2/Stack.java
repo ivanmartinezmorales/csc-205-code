@@ -10,6 +10,7 @@ import java.util.EmptyStackException;
 
 
 public class Stack<E> implements java.io.Serializable {
+    
     // data
     private ArrayList<E> stack;
 

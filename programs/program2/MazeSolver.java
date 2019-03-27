@@ -13,6 +13,9 @@ public class MazeSolver implements Serializable {
 
 
     // CONSTRUCTORS
+    /**
+     * Default constructor builds
+     */
     public MazeSolver(int numRows, int numCols) {
         
         // 0. Set up Scanner
@@ -30,7 +33,7 @@ public class MazeSolver implements Serializable {
         // 4. Set up trippy visuals (the maze, duh)
         display = new MazeDisplay(aMaze);
         aMaze.buildMaze(0);
-        aMaze.setSolveAnimationDelay(1);
+        aMaze.setSolveAnimationDelay(0);
         System.out.println("End of Maze Solver Constructor");
 
 
@@ -40,7 +43,7 @@ public class MazeSolver implements Serializable {
     /**
     * Method that solves the maze with the do-while loop. Outward facing method in entire class.
     */
-    public void solve() throws FileNotFoundException, IOException {
+    public boolean solve() throws FileNotFoundException, IOException {
         
         do {
 
@@ -48,7 +51,7 @@ public class MazeSolver implements Serializable {
             
         } while (!aMaze.goalReached());
 
-        System.out.println("Completed Maze!");
+        return true;
     }
     
     /**
@@ -60,6 +63,7 @@ public class MazeSolver implements Serializable {
     private void solve(String userInput) throws FileNotFoundException, IOException {
         
         if (userInput.matches("[Qq]{1}")) {
+
             // Need to find a way to find a way to kill this program without using system.exit()
             quitMaze();
 
@@ -129,6 +133,7 @@ public class MazeSolver implements Serializable {
      * Quits the maze gracefully.
      */
     private void quitMaze() {
+
         display.dispose(); 
         System.out.println("Now leaving maze. Goodbye!");
 
@@ -170,24 +175,19 @@ public class MazeSolver implements Serializable {
         switch (poppedDirection) {
 
             case UP:
-                
-                aMaze.move(Direction.DOWN);
-                System.out.println("Moving in the opposite direction: DOWN");
+                moveOpposite(Direction.UP, Direction.DOWN);    
                 break;
             
             case DOWN:
-                aMaze.move(Direction.UP);
-                System.out.println("");
+                moveOpposite(Direction.DOWN, Direction.UP);
                 break;
             
             case LEFT:
-                aMaze.move(Direction.RIGHT);
-                System.out.println("Moving in the ");
+                moveOpposite(Direction.LEFT, Direction.RIGHT);
                 break;
             
             case RIGHT:
-                aMaze.move(Direction.LEFT);
-                System.out.println("Moving in the opposite direction: LEFT ");
+                moveOpposite(Direction.RIGHT, Direction.LEFT);
                 break;
 
             default:
@@ -195,6 +195,17 @@ public class MazeSolver implements Serializable {
         
         }
 
+    }
+
+    /**
+     * Helper function that moves the maze in the opposite direction.
+     * @param direction Direction that was popped from directionStack.
+     * @param oppositeDirection Opposite direction to move in.
+     */
+    private void moveOpposite(Direction direction, Direction oppositeDirection) {
+
+        System.out.printf("Popped: %s, moving: %s", direction, oppositeDirection);
+        aMaze.move(oppositeDirection);
     }
 
 }

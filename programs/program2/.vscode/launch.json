@@ -2,6 +2,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - ResumeSolvingMaze",
+            "request": "launch",
+            "mainClass": "ResumeSolvingMaze"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - StartSolvingMaze",
             "request": "launch",
             "mainClass": "StartSolvingMaze"
