@@ -3,8 +3,8 @@
 public class MazeDisplay extends javax.swing.JFrame implements Runnable, java.io.Serializable
 {
 	//------------ constants
-	private final int START_WIDTH = 700;
-	private final int START_HEIGHT = 500;
+	private final int START_WIDTH = 1920;
+	private final int START_HEIGHT = 1080;
 	private final int ANIMATIONDELAY = 0;	//Animation display rate (in milliseconds), so 20fps
 
 	//------------ data

@@ -33,7 +33,7 @@ public class MazeSolver implements Serializable {
         // 4. Set up trippy visuals (the maze, duh)
         display = new MazeDisplay(aMaze);
         aMaze.buildMaze(0);
-        aMaze.setSolveAnimationDelay(1);
+        aMaze.setSolveAnimationDelay(0);
         System.out.println("End of Maze Solver Constructor");
 
 
@@ -43,7 +43,7 @@ public class MazeSolver implements Serializable {
     /**
     * Method that solves the maze with the do-while loop. Outward facing method in entire class.
     */
-    public void solve() throws FileNotFoundException, IOException {
+    public boolean solve() throws FileNotFoundException, IOException {
         
         do {
 
@@ -51,8 +51,7 @@ public class MazeSolver implements Serializable {
             
         } while (!aMaze.goalReached());
 
-        System.out.println("Completed Maze!");
-        kb.close();
+        return true;
     }
     
     /**
@@ -64,6 +63,7 @@ public class MazeSolver implements Serializable {
     private void solve(String userInput) throws FileNotFoundException, IOException {
         
         if (userInput.matches("[Qq]{1}")) {
+
             // Need to find a way to find a way to kill this program without using system.exit()
             quitMaze();
 
