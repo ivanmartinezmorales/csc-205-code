@@ -129,6 +129,10 @@ public class MazeSolver implements Serializable {
 
     }
 
+    private void _serializeMaze(String fileName) {
+        System.out.printf("Saving file to %s\n", fileName);
+        
+    }
     /**
      * Quits the maze gracefully.
      */
