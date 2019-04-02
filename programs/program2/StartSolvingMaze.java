@@ -21,22 +21,17 @@ public class StartSolvingMaze {
         int numCols = kb.nextInt();
         
         System.out.printf("Creating maze with %d rows and %d columns.\n", numRows, numCols);
-        solveMaze = new MazeSolver(numRows, numCols);
+        solveMaze = new MazeSolver(numRows, numCols, kb);
+        System.out.println("The maze has been created. Use q to quit, s to solve, and hit ENTER to solve the maze.");
+        // Must flush the return from the Scanner
+        kb.nextLine();
 
-
-        try {
-
-            mazeComplete = solveMaze.solve();
-
-        } catch (Exception ex) {
-
-            ex.printStackTrace();
-        } 
-        
+        mazeComplete = solveMaze.solve();
         if (mazeComplete == true) {
 
-            System.out.println("Completed the Maze. Thanks for playing!");
+            System.out.println("The maze is completed! Thanks for playing.");
         }
+
 
     }
 
