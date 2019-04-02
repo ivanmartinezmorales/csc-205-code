@@ -21,7 +21,7 @@ public class StartSolvingMaze {
         int numCols = kb.nextInt();
         
         System.out.printf("Creating maze with %d rows and %d columns.\n", numRows, numCols);
-        solveMaze = new MazeSolver(numRows, numCols, kb);
+        solveMaze = new MazeSolver(numRows, numCols);
         System.out.println("The maze has been created. Use q to quit, s to solve, and hit ENTER to solve the maze.");
         // Must flush the return from the Scanner
         kb.nextLine();

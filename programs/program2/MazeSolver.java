@@ -1,7 +1,7 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
-public class MazeSolver implements Serializable {
+public class MazeSolver implements java.io.Serializable {
     
     // DATA
     private Stack<Direction> directionStack;
@@ -15,12 +15,10 @@ public class MazeSolver implements Serializable {
      * Default constructor builds four things: the Scanner (to accept inputs)
      * @param numRows - number of rows that the user wants to create the maze with.
      * @param numCols - number of columns that the user wants to create the maze with.
-     * @param scanner - the scanner that is brought in from the driver.
-     * 
      */
-    public MazeSolver(int numRows, int numCols, Scanner scanner) {
+    public MazeSolver(int numRows, int numCols) {
         
-        this.kb = scanner;
+        this.kb = new Scanner(System.in);
         this.aMaze = new Maze(numRows, numCols);
         this.positionArray = new boolean[numRows][numCols];
         this.directionStack = new Stack<Direction>();
@@ -98,14 +96,10 @@ public class MazeSolver implements Serializable {
             keystone.writeObject(this);
             keystone.close();
 
-        } catch (Exception exception) {
-
+        } catch (Throwable e) {
+            e.printStackTrace();
             System.out.println("Uh oh, something went wrong. Check your file name!");
         
-        } finally {
-
-            System.out.println("Closing the pipeline, please wait.");
-            
         }
     }
 

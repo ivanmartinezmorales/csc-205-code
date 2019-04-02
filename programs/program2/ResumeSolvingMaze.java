@@ -4,7 +4,6 @@
 
 import java.io.*;
 import java.util.*;
-import java.lang.Throwable.*;
 
  public class ResumeSolvingMaze {
 
@@ -27,20 +26,25 @@ import java.lang.Throwable.*;
             System.out.println("Please give me the name of the file you would like to open.");
             
             fileName = kb.nextLine();
+            System.out.printf("the file is: %s", fileName);
             keystone = new ObjectInputStream(new FileInputStream(fileName));
             resumeMazeSolver = (MazeSolver) keystone.readObject();
             keystone.close();
+            mazeComplete = resumeMazeSolver.solve();
             
-        } catch (Exception ex) {
+            if (mazeComplete == true) {
+                System.out.println("Maze is complete! Thanks for playing.");
+            }
+
+        } catch (Throwable e) {
+            e.printStackTrace();
             System.out.println("Something went wrong...");
             
         }
 
         // 2. Begin solving Maze!
-        mazeComplete = resumeMazeSolver.solve();
+        
 
-        if (mazeComplete == true) {
-            System.out.println("Maze is complete! Thanks for playing.");
-        }
+        
     }
 }
