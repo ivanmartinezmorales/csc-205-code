@@ -1,3 +1,9 @@
+/**
+ * the MazeSolver class is a class built to solve beautiful Java mazes given to us in CSC205.
+ * This mazeSolver was created by Ivan Martinez Morales, of Glendale Community College,
+ * on this day, 1 April 2019.
+ */
+
 import java.util.*;
 import java.io.*;
 
@@ -8,7 +14,7 @@ public class MazeSolver implements java.io.Serializable {
     private boolean[][] positionArray;
     private Maze aMaze;
     private static MazeDisplay display;
-    private Scanner kb;
+    private static Scanner kb;
 
     // CONSTRUCTORS
     /**
@@ -18,16 +24,13 @@ public class MazeSolver implements java.io.Serializable {
      */
     public MazeSolver(int numRows, int numCols) {
         
-        this.kb = new Scanner(System.in);
+        
         this.aMaze = new Maze(numRows, numCols);
         this.positionArray = new boolean[numRows][numCols];
         this.directionStack = new Stack<Direction>();
 
-        display = new MazeDisplay(aMaze);
         aMaze.buildMaze(0);
         aMaze.setSolveAnimationDelay(0);
-        System.out.println("End of Maze Solver Constructor");
-
     }
 
     // METHODS
@@ -35,22 +38,29 @@ public class MazeSolver implements java.io.Serializable {
     * Method that solves the maze with the do-while loop. Outward facing method in entire class.
     */
     public boolean solve() {
-        
+
+        display = new MazeDisplay(aMaze);
+        kb = new Scanner(System.in);
+        System.out.println("End of Maze Solver Constructor"); 
+
         do {
             
             String userInput = kb.nextLine();
 
+            // User enters a q
             if (userInput.matches("[Qq]{1}")) {
 
                 display.dispose(); 
                 System.out.println("Now leaving maze. Goodbye!");
-    
+
+            // User enters an s
             } else if (userInput.matches("[Ss]{1}")) {
                 
                 System.out.println("Please tell me the name of the file you'd like to write.");
                 String outboundFileName = kb.nextLine();
                 serializeMaze(outboundFileName);
-    
+            
+            // User hits "enter"
             } else if (userInput.isEmpty()) {
     
                 if (aMaze.isOpen(Direction.DOWN) && !positionArray[aMaze.getCurrentRow() + 1][aMaze.getCurrentCol()]) {
@@ -76,7 +86,7 @@ public class MazeSolver implements java.io.Serializable {
             }
             
         } while (!aMaze.goalReached());
-
+        display.dispose();
         return true;
     }
 
@@ -97,10 +107,13 @@ public class MazeSolver implements java.io.Serializable {
             keystone.close();
 
         } catch (Throwable e) {
+            
             e.printStackTrace();
             System.out.println("Uh oh, something went wrong. Check your file name!");
         
         }
+
+        System.out.println("File saved. Press Enter to continue solving Maze, q to quit, and s to save.");
     }
 
     /**

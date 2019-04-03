@@ -1,5 +1,7 @@
 /**
- * ResumeSolvingMaze
+ * ResumeSolvingMaze loads the ol' maze up, and then begins to run 
+ * through it as if we were picking up where we left off. 
+ * Written by Ivan Martinez Morales, for CSC205
  */
 
 import java.io.*;
@@ -24,27 +26,28 @@ import java.util.*;
         try {
 
             System.out.println("Please give me the name of the file you would like to open.");
-            
+             
             fileName = kb.nextLine();
-            System.out.printf("the file is: %s", fileName);
+            System.out.printf("the file is: %s\n\n", fileName);
             keystone = new ObjectInputStream(new FileInputStream(fileName));
             resumeMazeSolver = (MazeSolver) keystone.readObject();
+            System.out.printf("File %s has been opened! Press enter to continue.");
+
+            kb.nextLine();
             keystone.close();
-            mazeComplete = resumeMazeSolver.solve();
-            
-            if (mazeComplete == true) {
-                System.out.println("Maze is complete! Thanks for playing.");
-            }
 
         } catch (Throwable e) {
-            e.printStackTrace();
-            System.out.println("Something went wrong...");
+
+            System.out.println("Something went wrong... Please check your filename and try again.");
             
         }
 
-        // 2. Begin solving Maze!
-        
+        // Running the MazeSolver.
+        mazeComplete = resumeMazeSolver.solve();
+            
+        if (mazeComplete == true) {
+            System.out.println("Maze is complete! Thanks for playing.");
+        }
 
-        
     }
 }

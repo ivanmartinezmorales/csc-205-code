@@ -1,10 +1,10 @@
 echo "Compiling maze"
 
-javac Direction.java Maze.java MazeDisplay.java MazeSolver.java StartSolvingMaze.java
+javac -target 1.4 Direction.java Maze.java MazeDisplay.java MazeSolver.java StartSolvingMaze.java
 
 echo "Executing StartSolvingMaze"
 
 java StartSolvingMaze
 echo "Compiling ResumeSolvingMaze"
-javac ResumeSolvingMaze.java
+javac -target 1.4 ResumeSolvingMaze.java
 echo "Starting ResumeSolvingMaze"
