@@ -1,3 +1,4 @@
 #
 .class File
 *.class
+.vscode
