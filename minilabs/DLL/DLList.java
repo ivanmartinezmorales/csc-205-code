@@ -4,7 +4,7 @@
  * 
  * The program includes the following methods:
  *  1.  addFirst - adding an element to the top of the list.
-    2.  TODO: removeFirst - removing the head of the list.
+    2.  removeFirst - removing the head of the list.
     3.  TODO: removeLast - removing the last element in the list.
     4.  TODO: add - Adding an element to position n
     5.  TODO: remove - removing n element from the list.
@@ -61,12 +61,14 @@
 
             head = tail = temp;
 
-        } else { // CASE 2: the list contains elements.
+        } 
+
+        // CASE 2: The list contains elements. 
+        else {
             
             temp.prev = tail;
             tail.next = temp;
             tail = temp;
-
         }
     }
 
@@ -79,12 +81,79 @@
         
         // CASE 1: the list is empty
         if (head == null) {
+
             throw NoSuchElementException;
         }
+
         // CASE 2: the list contains one element
-        else if (size() == 1)
+        else if (size() == 1) {
+
+            E savedElement = head.data;
+            ehad = tail = null;
+            return savedElement;
+        }
+
         // CASE 3: the list contains many elements
-        return E;
+        else {
+
+            E savedElement = head.data;
+            head = head.next;
+            head.prev = null;
+            return savedElement;
+        }   
+    }
+
+    /**
+     * Removes the last element in the Doubly Linked List.
+     * @return savedElement
+     * @throws NoSuchElementException
+     */
+    public E removeLast() throws NoSuchElementException {
+
+        // CASE 1: The list is empty
+        if (tail == null) {
+
+            throw NoSuchElementException;
+        }
+
+        // CASE 2: The list contains one element.
+        else if (size() == 1) {
+
+            E savedElement = tail.data;
+            head = tail = null;
+            
+            return savedElement;
+        }
+        
+        // CASE 3: The list contains many elements.
+        else {
+
+            E savedElement = tail.data;
+            tail = tail.prev;
+            tail.next = null;
+
+            return savedElement;
+        }
+    }
+
+
+    /**
+     * Adds the element to the list if the index is within the bounds of the list.
+     * @return
+     */
+    public void add() {
+        
+
+
+
+    }
+    
+    /**
+     * 
+     * @return savedElement the element that was removed from the list.
+     */
+    public E remove() {
+
     }
 
     /**
@@ -92,6 +161,7 @@
      * @return the size of the Doubly Linked List.
      */
     public int size() {
+
         int size = 0;
         Node<E> cursor = head;
 
@@ -116,8 +186,16 @@
      * @return head.data - the first element in the list.
      */
     public E getFirst() {
-        
+        return head.data;
     }
+
+    /**
+     * @return tail.data - the last element in the list.
+     */
+    public E getLast() {
+        return tail.data;
+    }
+
 
     /**
      * Finds and returns the last element in the list.
