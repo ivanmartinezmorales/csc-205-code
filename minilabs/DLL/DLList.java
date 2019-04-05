@@ -141,8 +141,31 @@
      * Adds the element to the list if the index is within the bounds of the list.
      * @return
      */
-    public void add() {
-        
+    public void add(E element, int index) {
+
+        // CASE 1: is the index in the bounds of the list?
+        if (index < 0 || index > size()) {
+
+            throw new IllegalArgumentException("The index is out of bounds!");
+        }
+
+        // CASE 2: is the index 0?
+        else if (index == 0) {
+
+            addFirst(element);
+        }
+
+        // CASE 3: Is the index at the end of the list?
+        else if (index == size()) {
+            
+            addLast(element);
+        }
+       
+        // CASE 4: The element is deep inside the list... time to infiltrate
+        else {
+
+            // 1. Traverse list
+        }
 
 
 
