@@ -164,7 +164,10 @@
         // CASE 4: The element is deep inside the list... time to infiltrate
         else {
 
-            // 1. Traverse list
+            // 1. Traverse list until we arrive at that space.
+            E cursor = head;
+            
+            while (cursor != )
         }
 
 
@@ -219,10 +222,6 @@
         return tail.data;
     }
 
-
-    /**
-     * Finds and returns the last element in the list.
-     */
     /**************************************************************
      * Inner class Node is used to create the Doubly Linked List.
      **************************************************************/
