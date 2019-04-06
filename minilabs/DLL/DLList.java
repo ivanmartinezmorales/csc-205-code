@@ -165,7 +165,7 @@
         else {
 
             // 1. Traverse list until we arrive at that space.
-            E cursor = head;
+            E cursor = head
             
             while (cursor != )
         }
