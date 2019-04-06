@@ -5,3 +5,4 @@
 - MinilabPoint - Creating a Point
 - MinilabSegment - Creating a Segment, an aggregate of Point.java
 - MinilabArrayList - Doing the perfect shuffle *techno music*
+- MinilabDLL - Creating a Doubly Linked list with the same methods commonly used in a Singly Linked List.
