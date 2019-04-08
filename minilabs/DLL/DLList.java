@@ -12,7 +12,7 @@
 
  import java.util.NoSuchElementException;
 
- public class DLList {
+ public class DLList<E> {
 
      // DATA
     protected Node<E> head;
@@ -77,19 +77,19 @@
      * @return formerHead
      * @throws NoSuchElementException if the list is empty.
      */
-    public E removeFirst() throws NoSuchElementException {
+    public E removeFirst() {
         
         // CASE 1: the list is empty
         if (head == null) {
 
-            throw NoSuchElementException;
+            throw new NoSuchElementException("The list is empty, I can't remove anything from it.");
         }
 
         // CASE 2: the list contains one element
         else if (size() == 1) {
 
             E savedElement = head.data;
-            ehad = tail = null;
+            head = tail = null;
             return savedElement;
         }
 
@@ -113,7 +113,7 @@
         // CASE 1: The list is empty
         if (tail == null) {
 
-            throw NoSuchElementException;
+            throw new NoSuchElementException("The element does not exist.");
         }
 
         // CASE 2: The list contains one element.
@@ -135,7 +135,6 @@
             return savedElement;
         }
     }
-
 
     /**
      * Adds the element to the list if the index is within the bounds of the list.
@@ -165,20 +164,11 @@
         else {
 
             // 1. Traverse list until we arrive at that space.
-            E cursor = head
+            // E cursor = head
             
-            while (cursor != )
+            // while (cursor != )
+            System.out.println("Under construction");
         }
-
-
-
-    }
-    
-    /**
-     * 
-     * @return savedElement the element that was removed from the list.
-     */
-    public E remove() {
 
     }
 
@@ -222,19 +212,60 @@
         return tail.data;
     }
 
+    /**
+     * toString() returns a string representation of the Doubly Linked List.
+     * @return Returns a string representation of the object.
+     */
+    public String toString() {
+
+        String answer = null;
+        Node<E> cursor = head;
+
+        while (cursor != null) {
+            answer = answer + cursor.toString() + "-->";
+            cursor = cursor.next;
+        }
+
+        // Appending null to the end of the list.
+        answer.concat("(null)");
+        return answer;
+    }
+
+    /**
+     * Contains finds if an object is in the Doubly Linked List.
+     * @param obj
+     * @return true if the object is in 
+     */
+    public boolean contains(Object obj) {
+
+        Node<E> cursor = head;
+        while (cursor != null) {
+            if (cursor.data.equals(obj)) {
+                return true;
+            }
+            cursor = cursor.next;
+        }
+        
+        return false;
+    }
+    
+    
     /**************************************************************
      * Inner class Node is used to create the Doubly Linked List.
      **************************************************************/
-    private class Node<E> {
+    protected class Node<E> {
+
         // DATA
         protected E data;
         protected Node<E> next;
         protected Node<E> prev;
+
         //CONSTRUCTORS
         public Node(E data) {
             this.data = data;
             this.next = this.prev = null;
         }
+
         // METHODS
         public String toString() {
             return this.data.toString();
@@ -426,7 +457,6 @@ public class DLList<E> {
             theNode.prev = cursor;
             theNode.next = cursor.next;
             cursor.next = theNode;
-
         }
     }
     // toString() - returns DLL representation as a String
@@ -436,10 +466,7 @@ public class DLList<E> {
         DLLNode<E> cursor = head;
         while (cursor!= null) {
             answer = answer + cursor.toString() + "-->";
-            cursor = cursor.next;
-
-        }
-
+            cursor = cursor.nex
         answer = answer + "(null)";
 
         return answer;
