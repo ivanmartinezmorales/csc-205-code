@@ -1,27 +1,16 @@
 /**
- * infinite int - 
- * 
  * 
  */
+
 import java.util.*;
 
-public class InfiniteInt extends DLList<Integer> {
-    
+public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteInt>, InfiniteInterface {
     // DATA
-    private StringTokenizer numberMaker;
-
-    // CONSTRUCTORS
-    public InfiniteInt(String number) {
-
-        numberMaker = new StringTokenizer(number);
-        System.out.println("The number of tokens will be: " + numberMaker);
-        while (numberMaker.hasMoreTokens()) {
-        
-            String token = numberMaker.nextToken();
-            System.out.println("the next token to be processed is: " + token);
-            // Save the token into the linkedList.
-            
-        }
-    }
+    private String toBeTokenized;
+    // CONSTRCTOR
+    /* Default contructor accepts no agruments and builds a null linked list. */
+    /* Paramaterized contructor recieves a String as an argument and then builds a linked list.*/
     // METHODS
+    
+    
 }
