@@ -270,7 +270,7 @@ public class DLList<E> {
     */
    public String toString() {
 
-       String answer = null;
+       String answer = "";
        DLLNode<E> cursor = head;
 
        while (cursor != null) {
@@ -279,7 +279,7 @@ public class DLList<E> {
        }
 
        // Appending null to the end of the list.
-       answer.concat("(null)");
+       answer = answer + "(null)";
        return answer;
    }
 

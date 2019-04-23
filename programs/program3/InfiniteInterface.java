@@ -1,5 +1,5 @@
 public interface InfiniteInterface {
-    public boolean equals();
+    public boolean equals(Object o);
     public String superToString();
 
     public int compareTo(InfiniteInt o);
