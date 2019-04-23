@@ -49,7 +49,7 @@ public class InfiniteIntDriver {
         print("\n\n\n");
     }
 
-    public static void testCompareTo(String infinteString, String infiniteStringTwo) {
+    public static void testCompareTo(String infiniteString, String infiniteStringTwo) {
         System.out.printf("Creating number with: %s\n", infiniteString);
         InfiniteInt number = new InfiniteInt(infiniteString);
         System.out.printf("Creating second number with: %s\n", infiniteStringTwo);
