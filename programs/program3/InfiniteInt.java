@@ -1,6 +1,8 @@
-/**
- *  
- */
+/**************************************************************************
+ * Program Title: Program 3
+ * Program author: Ivan Martinez Morales
+ * Program due date: 30 April 2019
+ **************************************************************************/
 
 import java.util.*;
 
@@ -12,7 +14,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
     private StringTokenizer tokenizer;
 
     /**************************************************************************
-     *                                  CONSTRUCTORS
+     *                               CONSTRUCTORS
      **************************************************************************/
     /**
      *  Default contructor accepts no agruments and builds a null linked list. 
@@ -27,13 +29,13 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
     public InfiniteInt(String integerString) {
 
         tokenizer = new StringTokenizer(integerString, ",");
-        System.out.printf("The number of tokens that I will create are: %d\n", tokenizer.countTokens());
+        // DEBUG: uncomment to check the number of tokens to be created.
+        // System.out.printf("The number of tokens that I will create are: %d\n", tokenizer.countTokens());
+
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
             addLast(Integer.parseInt(token));
         }
-        System.out.println(super.toString());
-        System.out.println(this.getClass());
     }
 
     /**************************************************************************
@@ -114,10 +116,47 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
     }
 
     /**
-     * Compares two InfiniteInts against eachother.
+     * compareIntegers compares the inner numbers inside of each DLL Node. Just like
+     * compareTo, it will return a 1 when the int is larger,
+     * 
+     * @param comparedInt the InfiniteInt to compare our own class' int to.
+     * @return 
      */
-    public int compareTo(InfiniteInt o) {
-        return -1; // scaffolding
+    public int compareTo(InfiniteInt comparedInt) {
+
+        if (this.equals(comparedInt)) {
+            return 0;
+        }
+
+        DLLNode<Integer> ourTail = this.tail;
+        DLLNode<Integer> comparedTail = comparedInt.tail;
+        // WHILE THE SHORTER CURSOR.PREV IS NOT NULL
+        int sizeComparison = this.size().compareTo(comparedInt.size());
+
+        switch (sizeComparsion) {
+            case 1: // first list is bigger
+                return 1;
+        
+            case -1: // second list is bigger
+                return -1;
+
+            default: // the lists are of equal length
+                // This loop will run inside of the default case for ever pretty much until resolved.
+                while (ourTail.prev != null) {
+                    if (ourTail.data.compareTo(comparedTail.data) == 1) {
+                        // This means that our tail is bigger than the compared tail...
+                        return 1;
+
+                    } else if (ourTail.data.compareTo(comparedTail.data) == -1) {
+                        return -1;
+
+                    } else {
+                        // the two are equal.. so continue
+                        ourTail = ourTail.prev;
+                        comparedTail = comparedTail.prev;
+                    }
+                }
+        }
     }
 
     /**
@@ -145,17 +184,6 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
         // 1. WHILE TRAVERSING, ADD THE TWO NUMBERS TOGETHER
         // 2. IF THE NUMBER IS GREATER THAN 1,000, THEN CARRY THE VALUE OVER TO THE NEXT INT
         // 3. CLEAR THE CARRY OVER BECAUSE YOU'LL RUIN YOUR DAY IF YOU DON'T. 
-    }
-
-    /**
-     * Helper method that compares of both the first and second ints, and returns:
-     * -1 if the first Int is bigger, 1 if the second int is bigger, and 0 if the its are the same size.
-     * @param firstInt
-     * @param secondInt
-     * @return
-     */
-    private static int compareSizes(InfiniteInt firstInt, InfiniteInt secondInt) {
-
     }
 
 }
