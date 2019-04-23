@@ -41,6 +41,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      **************************************************************************/
     /**
      * Returns a string represenatation of the number.
+     * @return a string in the format: xxx,xxx,xxx,xxx for the given InfiniteInt.
      */
     public String toString() {
         String answer = "";
@@ -63,22 +64,25 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
 
     /**
      * Method that tests for equality between an infiniteint and an object.
+     * This method works on testing equality based on the class' toString() method.
+     * If the two toString()'s are equal, then return true.
+     * @param o The object to be compared.
+     * @return true if the two InfiniteInts are identical.
      */
     public boolean equals(Object o) {
         if (o == null) {
             return false;
-
-        } else if (o.getClass() != this.getClass()) {
+        } 
+        if (o.getClass() != this.getClass()) {
             return false;
-
-        } else {
-            // TODO: Add cast to InfiniteInt class here.
         }
-        return false; // scaffolding
+        InfiniteInt objInfInt = (InfiniteInt) o;
+        return this.toString().equals(objInfInt.toString());
     }
     
     /**
      * Method that class the parent class's toString().
+     * @return a String representation of the underlying doubly-linked list.
      */
     public String superToString() {
         return super.toString(); 
@@ -91,6 +95,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      * would return true because the number ends in 5, meeting the criteria 
      * for being divisible by 5. The same can be said about test cases like:
      * 777,777,777,775 where the value would return true as well.
+     * @return true if the InfiniteInt is divisible by 5. 
      */
     public boolean isDivisibleBy5() {
         return (this.tail.data.intValue() % 5 == 0);
@@ -102,6 +107,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      * then the last three digits of the InfiniteInt are technically zero.
      * Also, we need to check that the tail is not the head, as this would mean that
      * the InfiniteInt is only zero.
+     * @return true if the InfinteInt is divisible by 1000.
      */
     public boolean isDivisibleBy1000() {
         return (this.tail.data.intValue()) == 0 && (this.tail != this.head);
@@ -114,5 +120,14 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
         return -1; // scaffolding
     }
 
+    /**
+     * Adds two InfiniteInts together and returns the sum as an InfiniteInt.
+     * @param firstInt first InfinteInt to be added.
+     * @param secondInt second InfinteInt to be added.
+     * @return InfinteInt answer - The sum of the two ints.
+     */
+    public static InfinteInt add(InfiniteInt firstInt, InfinteInt secondInt) {
+        
+    }
 
 }
