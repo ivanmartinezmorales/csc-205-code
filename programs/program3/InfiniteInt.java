@@ -2,6 +2,7 @@
  * Program Title: Program 3
  * Program author: Ivan Martinez Morales
  * Program due date: 30 April 2019
+ * 
  **************************************************************************/
 
 import java.util.*;
@@ -165,25 +166,25 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      * @param secondInt second InfinteInt to be added.
      * @return InfinteInt answer - The sum of the two ints.
      */
-    public static InfiniteInt add(InfiniteInt firstInt, InfinteInt secondInt) {
-        // 0. SET UP OUR ANSWER INFINITEINT FIRST.
-        InfiniteInt answer = new InfinteInt();
-        // 0. TRAVERSE EACH LIST SIMUTANIOUSLY
-        DLLNode<Integer> firstCursor = firstInt.tail;
-        DLLNode<Integer> secondCursor = secondInt.tail;
-        int carryOver = 0;
-        // TRAVERSE THE LISTS SIMUATNIOUSLY (spelling D:)
-        while (firstInt.prev != null) {
-            int temp = firstCursor.data.intValue() + secondCursor.data.intValue();
-            if (temp >= 1000) {
-                carryOver = 1;
-                sum = temp - 1000;
+    // public static InfiniteInt add(InfiniteInt firstInt, InfinteInt secondInt) {
+    //     // 0. SET UP OUR ANSWER INFINITEINT FIRST.
+    //     InfiniteInt answer = new InfinteInt();
+    //     // 0. TRAVERSE EACH LIST SIMUTANIOUSLY
+    //     DLLNode<Integer> firstCursor = firstInt.tail;
+    //     DLLNode<Integer> secondCursor = secondInt.tail;
+    //     int carryOver = 0;
+    //     // TRAVERSE THE LISTS SIMUATNIOUSLY (spelling D:)
+    //     while (firstInt.prev != null) {
+    //         int temp = firstCursor.data.intValue() + secondCursor.data.intValue();
+    //         if (temp >= 1000) {
+    //             carryOver = 1;
+    //             sum = temp - 1000;
 
-            } 
-        }
-        // 1. WHILE TRAVERSING, ADD THE TWO NUMBERS TOGETHER
-        // 2. IF THE NUMBER IS GREATER THAN 1,000, THEN CARRY THE VALUE OVER TO THE NEXT INT
-        // 3. CLEAR THE CARRY OVER BECAUSE YOU'LL RUIN YOUR DAY IF YOU DON'T. 
-    }
+    //         } 
+    //     }
+    //     // 1. WHILE TRAVERSING, ADD THE TWO NUMBERS TOGETHER
+    //     // 2. IF THE NUMBER IS GREATER THAN 1,000, THEN CARRY THE VALUE OVER TO THE NEXT INT
+    //     // 3. CLEAR THE CARRY OVER BECAUSE YOU'LL RUIN YOUR DAY IF YOU DON'T. 
+    // }
 
 }
