@@ -151,25 +151,29 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      * @param secondInt second InfinteInt to be added.
      * @return InfinteInt answer - The sum of the two ints.
      */
-    // public static InfiniteInt add(InfiniteInt firstInt, InfinteInt secondInt) {
-    //     // 0. SET UP OUR ANSWER INFINITEINT FIRST.
-    //     InfiniteInt answer = new InfinteInt();
-    //     // 0. TRAVERSE EACH LIST SIMUTANIOUSLY
-    //     DLLNode<Integer> firstCursor = firstInt.tail;
-    //     DLLNode<Integer> secondCursor = secondInt.tail;
-    //     int carryOver = 0;
-    //     // TRAVERSE THE LISTS SIMUATNIOUSLY (spelling D:)
-    //     while (firstInt.prev != null) {
-    //         int temp = firstCursor.data.intValue() + secondCursor.data.intValue();
-    //         if (temp >= 1000) {
-    //             carryOver = 1;
-    //             sum = temp - 1000;
-
-    //         } 
-    //     }
-    //     // 1. WHILE TRAVERSING, ADD THE TWO NUMBERS TOGETHER
-    //     // 2. IF THE NUMBER IS GREATER THAN 1,000, THEN CARRY THE VALUE OVER TO THE NEXT INT
-    //     // 3. CLEAR THE CARRY OVER BECAUSE YOU'LL RUIN YOUR DAY IF YOU DON'T. 
-    // }
-
+    public static InfiniteInt add(InfiniteInt firstInt, InfinteInt secondInt) {
+        // 0. SET UP OUR ANSWER INFINITEINT FIRST.
+        InfiniteInt answer = new InfinteInt();
+        DLLNode<Integer> firstCursor = firstInt.tail;
+        DLLNode<Integer> secondCursor = secondInt.tail;
+        
+        // FIGURE OUT WHICH ONE IS LONGER:
+        int lengthComparison = Integer.compare(firstInt.size(), secondInt.size());
+        switch (lengthComparison) {
+            case 1: // first list is longer:
+                while (secondCursor.prev != null) {
+                    answer.addFirst(Integer.sum(firstInt.data, secondInt.data));
+                    // do stuff
+                }
+            case -1: // second list is longer:
+                while (firstCursor.prev != null) {
+                    // do stuff
+                }
+            default: // lists are the same length:
+                while (firstCursor.prev != null) {
+                    // do stuff
+                }
+        }
+        return answer;
+    }
 }
