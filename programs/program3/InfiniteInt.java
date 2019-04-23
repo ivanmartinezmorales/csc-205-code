@@ -2,7 +2,6 @@
  * Program Title: Program 3
  * Program author: Ivan Martinez Morales
  * Program due date: 30 April 2019
- * 
  **************************************************************************/
 
 import java.util.*;
@@ -23,6 +22,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
     public InfiniteInt() {
         super();
     }
+
     /**
      * Paramaterized contructor recieves a String as an argument and then builds a linked list. 
      * @param integerString the string that will be parsed by the constructor.
@@ -30,7 +30,6 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
     public InfiniteInt(String integerString) {
 
         tokenizer = new StringTokenizer(integerString, ",");
-        // DEBUG: uncomment to check the number of tokens to be created.
         // System.out.printf("The number of tokens that I will create are: %d\n", tokenizer.countTokens());
 
         while (tokenizer.hasMoreTokens()) {
@@ -55,20 +54,16 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
             int numberString = cursor.data.intValue();
             answer = answer.concat(String.format("%03d", numberString));
             
-            // Sprinkling in those commas:
             if (cursor.next != null) {
                 answer = answer.concat(",");
             }
             cursor = cursor.next;
         } 
-
         return answer; // DONE!
     }
 
     /**
      * Method that tests for equality between an infiniteint and an object.
-     * This method works on testing equality based on the class' toString() method.
-     * If the two toString()'s are equal, then return true.
      * @param o The object to be compared.
      * @return true if the two InfiniteInts are identical.
      */
@@ -93,11 +88,6 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
 
     /**
      * Returns true if the InfiniteInt is divisible by 5.
-     * The the method works by checking the tail, since we can have an
-     * infinitismally large number like 124,245,235,235,205 and the number
-     * would return true because the number ends in 5, meeting the criteria 
-     * for being divisible by 5. The same can be said about test cases like:
-     * 777,777,777,775 where the value would return true as well.
      * @return true if the InfiniteInt is divisible by 5. 
      */
     public boolean isDivisibleBy5() {
@@ -106,10 +96,6 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
 
     /**
      * Returns true if the InfiniteInt is divisible by 1000.
-     * The method works by checking if the tail is 0. If the tail is zero,
-     * then the last three digits of the InfiniteInt are technically zero.
-     * Also, we need to check that the tail is not the head, as this would mean that
-     * the InfiniteInt is only zero.
      * @return true if the InfinteInt is divisible by 1000.
      */
     public boolean isDivisibleBy1000() {
@@ -118,8 +104,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
 
     /**
      * compareIntegers compares the inner numbers inside of each DLL Node. Just like
-     * compareTo, it will return a 1 when the int is larger,
-     * 
+     * compareTo, it will return a 1 when the int is larger.
      * @param comparedInt the InfiniteInt to compare our own class' int to.
      * @return 
      */
@@ -131,33 +116,33 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
 
         DLLNode<Integer> ourTail = this.tail;
         DLLNode<Integer> comparedTail = comparedInt.tail;
-        // WHILE THE SHORTER CURSOR.PREV IS NOT NULL
-        int sizeComparison = this.size().compareTo(comparedInt.size());
+        int sizeComparison = Integer.compare(this.size(), comparedInt.size());
 
-        switch (sizeComparsion) {
+        switch (sizeComparison) {
             case 1: // first list is bigger
-                return 1;
-        
+                sizeComparison = 1;
+                break;
             case -1: // second list is bigger
-                return -1;
-
+                sizeComparison = -1;
+                break;
             default: // the lists are of equal length
-                // This loop will run inside of the default case for ever pretty much until resolved.
                 while (ourTail.prev != null) {
                     if (ourTail.data.compareTo(comparedTail.data) == 1) {
-                        // This means that our tail is bigger than the compared tail...
-                        return 1;
+                        sizeComparison = 1;
+                        break;
 
                     } else if (ourTail.data.compareTo(comparedTail.data) == -1) {
-                        return -1;
+                        sizeComparison = -1;
+                        break;
 
                     } else {
-                        // the two are equal.. so continue
                         ourTail = ourTail.prev;
                         comparedTail = comparedTail.prev;
                     }
                 }
         }
+
+        return sizeComparison;
     }
 
     /**
