@@ -126,8 +126,36 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      * @param secondInt second InfinteInt to be added.
      * @return InfinteInt answer - The sum of the two ints.
      */
-    public static InfinteInt add(InfiniteInt firstInt, InfinteInt secondInt) {
-        
+    public static InfiniteInt add(InfiniteInt firstInt, InfinteInt secondInt) {
+        // 0. SET UP OUR ANSWER INFINITEINT FIRST.
+        InfiniteInt answer = new InfinteInt();
+        // 0. TRAVERSE EACH LIST SIMUTANIOUSLY
+        DLLNode<Integer> firstCursor = firstInt.tail;
+        DLLNode<Integer> secondCursor = secondInt.tail;
+        int carryOver = 0;
+        // TRAVERSE THE LISTS SIMUATNIOUSLY (spelling D:)
+        while (firstInt.prev != null) {
+            int temp = firstCursor.data.intValue() + secondCursor.data.intValue();
+            if (temp >= 1000) {
+                carryOver = 1;
+                sum = temp - 1000;
+
+            } 
+        }
+        // 1. WHILE TRAVERSING, ADD THE TWO NUMBERS TOGETHER
+        // 2. IF THE NUMBER IS GREATER THAN 1,000, THEN CARRY THE VALUE OVER TO THE NEXT INT
+        // 3. CLEAR THE CARRY OVER BECAUSE YOU'LL RUIN YOUR DAY IF YOU DON'T. 
+    }
+
+    /**
+     * Helper method that compares of both the first and second ints, and returns:
+     * -1 if the first Int is bigger, 1 if the second int is bigger, and 0 if the its are the same size.
+     * @param firstInt
+     * @param secondInt
+     * @return
+     */
+    private static int compareSizes(InfiniteInt firstInt, InfiniteInt secondInt) {
+
     }
 
 }
