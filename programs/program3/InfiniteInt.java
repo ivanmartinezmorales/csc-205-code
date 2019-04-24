@@ -188,22 +188,22 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
     public static InfiniteInt add(InfiniteInt firstInt, InfiniteInt secondInt) {
         // 0. SETTING UP OUR RESPONSE LIST.
         InfiniteInt reponse = new InfiniteInt();
+        int listComparison = Integer.compare(firstInt.size(), secondInt.size());
         
-
-    }
-
-    private static boolean isLonger(InfiniteInt firstInt, InfiniteInt secondInt) {
-        int longerList = Integer.compare(firstInt.size(), secondInt.size());
-        switch (longerList) {
+        switch (listComparison) {
             case 1:
-                return true;
-            
+                add(firstInt, secondInt, response);    
+                break;
+        
             case -1:
-                return false;
-
+                add(secondInt, firstInt, response);
+                break;
             default:
-                return false;
+                add(firstInt, secondInt, response);
+                break;
         }
+        return response;
+
     }
 
     private static void add(InfiniteInt longerInt, InfiniteInt shorterInt, InfiniteInt response) {
@@ -213,18 +213,30 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
         int sum = 0;
         int carryOver = 0;
         // START WALKING BACK FROM THE END OF THE LIST (smallest digits, just like how you add numbers in rea life.)
-        while (longTail.prev != null) {
-            // CLEAR SUM:
-            sum = 0 + carryOver; // THE CARRY OVER WILL BE APPENDED TO THE LIST
-            sum = Integer.sum(longCursor.data, shortCursor.data);
-            System.out.prinf("The sum of the two nodes is: %d\n\n", sum);
-            if (sum >= 1000) {
-                 // PARSE THE INT INTO THE CARRY, AND THE SUM.
-                carryOver++;
-                sum = sum - 1000;
+        while (longCursor.prev != null) {
+            //  HANDLE IF THERE ARE EXTRA DECIMAL PLACES
+            if (shortCursor.data == null) {
+                response.addFirst(Integer.sum(longCursor.data, carryOver));
             }
 
-
+            sum = ++carryOver; // ADDING THE CARRYOVER TO THE SUM BEFORE THE SUM IS RUINED.
+            carryOver = 0; // CARRY OVER HAS BEEN EXPENDED MOTHERFUCKER.
+            sum = sum + Integer.sum(longCursor.data, shortCursor.data); // ADDING THESE TWO GODDAMN NUMBERS TOGETHER.
+            System.out.printf("The sum of the two nodes is: %d\n\n", sum); // TELLING THE USER WHAT WE'VE ADDED
+            if (sum >= 1000) { // IF THE GODDAMN NUMBER IS TOO BIG, THEN SUBTRACT 1000, AND INCREMENT THE SUM
+                 // PARSE THE INT INTO THE CARRY, AND THE SUM.
+                carryOver = 1;
+                sum = sum - 1000;
+            }
+            // NOW, WE HAVE OUR SWEET LIL' SUM THAT WE'RE GOING TO MAKE INTO OUR NODE.
+            response.addFirst(sum);
+            // NOW GET TEAR ALL THIS SHIT DOWN AND GET IT READY FOR THE NEXT ITERATION
+            sum = 0;
+            longCursor = longCursor.prev;
+            if (shortCursor.data == null) {
+                continue;
+            }
+            shortCursor = shortCursor.prev;
         } 
     }
 }
