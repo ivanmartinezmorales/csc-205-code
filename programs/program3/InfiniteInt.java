@@ -34,6 +34,13 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
 
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
+
+            if (token.matches("[A-Za-z]") == true) {
+                System.out.println(token);
+                System.out.println("This string contains invalid characters.");
+                throw new IllegalArgumentException("Invalid Character!");
+            }
+
             addLast(Integer.parseInt(token));
         }
     }
@@ -114,8 +121,8 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
             return 0;
         }
 
-        DLLNode<Integer> ourTail = this.tail;
-        DLLNode<Integer> comparedTail = comparedInt.tail;
+        DLLNode<Integer> ourHead = this.head;
+        DLLNode<Integer> comparedHead = comparedInt.head;
         int sizeComparison = Integer.compare(this.size(), comparedInt.size());
 
         switch (sizeComparison) {
@@ -125,19 +132,20 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
             case -1: // second list is bigger
                 sizeComparison = -1;
                 break;
-            default: // the lists are of equal length
-                while (ourTail.prev != null) {
-                    if (ourTail.data.compareTo(comparedTail.data) == 1) {
+            default: 
+                /* Works by first checking the leading term, and then if those two are equal, then continue moving down*/
+                while (ourHead.next != null) {
+                    if (ourHead.data.compareTo(comparedHead.data) == 1) {
                         sizeComparison = 1;
                         break;
 
-                    } else if (ourTail.data.compareTo(comparedTail.data) == -1) {
+                    } else if (ourHead.data.compareTo(comparedHead.data) == -1) {
                         sizeComparison = -1;
                         break;
 
                     } else {
-                        ourTail = ourTail.prev;
-                        comparedTail = comparedTail.prev;
+                        ourHead = ourHead.next;
+                        comparedHead = comparedHead.next;
                     }
                 }
         }
@@ -151,29 +159,72 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      * @param secondInt second InfinteInt to be added.
      * @return InfinteInt answer - The sum of the two ints.
      */
-    public static InfiniteInt add(InfiniteInt firstInt, InfinteInt secondInt) {
-        // 0. SET UP OUR ANSWER INFINITEINT FIRST.
-        InfiniteInt answer = new InfinteInt();
-        DLLNode<Integer> firstCursor = firstInt.tail;
-        DLLNode<Integer> secondCursor = secondInt.tail;
+    // public static InfiniteInt add(InfiniteInt firstInt, InfinteInt secondInt) {
+    //     // 0. SET UP OUR ANSWER INFINITEINT FIRST.
+    //     InfiniteInt answer = new InfinteInt();
+    //     DLLNode<Integer> firstCursor = firstInt.tail;
+    //     DLLNode<Integer> secondCursor = secondInt.tail;
         
-        // FIGURE OUT WHICH ONE IS LONGER:
-        int lengthComparison = Integer.compare(firstInt.size(), secondInt.size());
-        switch (lengthComparison) {
-            case 1: // first list is longer:
-                while (secondCursor.prev != null) {
-                    answer.addFirst(Integer.sum(firstInt.data, secondInt.data));
-                    // do stuff
-                }
-            case -1: // second list is longer:
-                while (firstCursor.prev != null) {
-                    // do stuff
-                }
-            default: // lists are the same length:
-                while (firstCursor.prev != null) {
-                    // do stuff
-                }
+    //     // FIGURE OUT WHICH ONE IS LONGER:
+    //     int lengthComparison = Integer.compare(firstInt.size(), secondInt.size());
+    //     switch (lengthComparison) {
+    //         case 1: // first list is longer:
+    //             while (secondCursor.prev != null) {
+    //                 answer.addFirst(Integer.sum(firstInt.data, secondInt.data));
+    //                 // do stuff
+    //             }
+    //         case -1: // second list is longer:
+    //             while (firstCursor.prev != null) {
+    //                 // do stuff
+    //             }
+    //         default: // lists are the same length:
+    //             while (firstCursor.prev != null) {
+    //                 // do stuff
+    //             }
+    //     }
+    //     return answer;
+    // }
+
+    public static InfiniteInt add(InfiniteInt firstInt, InfiniteInt secondInt) {
+        // 0. SETTING UP OUR RESPONSE LIST.
+        InfiniteInt reponse = new InfiniteInt();
+        
+
+    }
+
+    private static boolean isLonger(InfiniteInt firstInt, InfiniteInt secondInt) {
+        int longerList = Integer.compare(firstInt.size(), secondInt.size());
+        switch (longerList) {
+            case 1:
+                return true;
+            
+            case -1:
+                return false;
+
+            default:
+                return false;
         }
-        return answer;
+    }
+
+    private static void add(InfiniteInt longerInt, InfiniteInt shorterInt, InfiniteInt response) {
+        // START ADDING FROM THE LONGER ONE.
+        DLLNode<Integer> longCursor = longerInt.tail;
+        DLLNode<Integer> shortCursor = shorterInt.tail;
+        int sum = 0;
+        int carryOver = 0;
+        // START WALKING BACK FROM THE END OF THE LIST (smallest digits, just like how you add numbers in rea life.)
+        while (longTail.prev != null) {
+            // CLEAR SUM:
+            sum = 0 + carryOver; // THE CARRY OVER WILL BE APPENDED TO THE LIST
+            sum = Integer.sum(longCursor.data, shortCursor.data);
+            System.out.prinf("The sum of the two nodes is: %d\n\n", sum);
+            if (sum >= 1000) {
+                 // PARSE THE INT INTO THE CARRY, AND THE SUM.
+                carryOver++;
+                sum = sum - 1000;
+            }
+
+
+        } 
     }
 }

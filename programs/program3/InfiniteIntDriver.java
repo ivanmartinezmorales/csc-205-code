@@ -9,21 +9,27 @@ public class InfiniteIntDriver {
         /**
          * ROUND ONE OF TESTING! Testing toString, and divisibility functions.
          */
-       print("setting up testing environment");
-        for (String s : testCases) {
-            testCase(s);        
-        }
-        print("First batch of testing complete!");
+    //    print("setting up testing environment");
+    //     for (String s : testCases) {
+    //         testCase(s);        
+    //     }
+    //     print("First batch of testing complete!");
 
         /**
          * ROUND TWO OF TEST CASES: TESTING compareTo, add, and equals
          */
-        print("Setting up testing environment for second round of tests");
-        for (int i = 1; i < testCases.length; i++) {
-            testCompareTo(testCases[i], testCases[i-1]);
-        }
+        // print("Setting up testing environment for second round of tests");
+        // for (int i = 1; i < testCases.length; i++) {
+        //     testCompareTo(testCases[i], testCases[i-1]);
+        // }
 
-        print("Second round of test cases complete.");
+        // print("Second round of test cases complete.");
+
+        // testCompareTo("123", "456");
+        InfiniteInt wrongLetter = new InfiniteInt("112,233");
+        print("End of program!");
+        
+
     }
 
     public static void testCase(String infiniteString) {
