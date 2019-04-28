@@ -1,34 +1,31 @@
-import java.util.*;
 
-public class InfiniteIntDriver {
+public class InfiniteIntTester {
 
-    private static String[] testCases = {"100,000,000,000", "123,123,123,123", "123", "485,123,127,055", "1", "192,123,123,123,123,123"};
+    private static String[] testCases = { "100,000,000,000", "123,123,123,123", "123", "485,123,127,055", "1",
+            "192,123,123,123,123,123" };
 
     public static void main(String[] args) {
 
         /**
          * ROUND ONE OF TESTING! Testing toString, and divisibility functions.
          */
-    //    print("setting up testing environment");
-    //     for (String s : testCases) {
-    //         testCase(s);        
-    //     }
-    //     print("First batch of testing complete!");
+        // print("setting up testing environment");
+        // for (String s : testCases) {
+        // testCase(s);
+        // }
+        // print("First batch of testing complete!");
 
         /**
          * ROUND TWO OF TEST CASES: TESTING compareTo, add, and equals
          */
         // print("Setting up testing environment for second round of tests");
         // for (int i = 1; i < testCases.length; i++) {
-        //     testCompareTo(testCases[i], testCases[i-1]);
+        // testCompareTo(testCases[i], testCases[i-1]);
         // }
 
         // print("Second round of test cases complete.");
 
         // testCompareTo("123", "456");
-        InfiniteInt wrongLetter = new InfiniteInt("112,233");
-        print("End of program!");
-        
         testAdd();
 
     }
@@ -73,16 +70,17 @@ public class InfiniteIntDriver {
 
     public static void testAdd() {
         // 1. LOAD TEST CASES.
-        String[] addCases = {"999", "999"};
+        String[] addCases = { "1,001", "999" };
         for (int i = 1; i < addCases.length; i++) {
             InfiniteInt numOne = new InfiniteInt(addCases[i]);
-            InfiniteInt numTwo = new InfiniteInt(addCases[i-1]);
-            System.out.printf("Testing add... adding %s and %s, should equal: %d", addCases[i], addCases[i-1], 
-                Integer.sum(Integer.parseInt(addCases[i]), Integer.parseInt(addCases[i-1])));
+            InfiniteInt numTwo = new InfiniteInt(addCases[i - 1]);
+            // System.out.printf("Testing add... adding %s and %s, should equal: %d",
+            // addCases[i], addCases[i-1],
+            // Integer.sum(Integer.parseInt(addCases[i]), Integer.parseInt(addCases[i-1])));
 
             InfiniteInt result = InfiniteInt.add(numOne, numTwo);
             System.out.printf("The result is: %s", result.toString());
-            
+
             print("Moving on to next test.");
         }
     }
