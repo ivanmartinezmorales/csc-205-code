@@ -29,6 +29,7 @@ public class InfiniteIntDriver {
         InfiniteInt wrongLetter = new InfiniteInt("112,233");
         print("End of program!");
         
+        testAdd();
 
     }
 
@@ -70,4 +71,19 @@ public class InfiniteIntDriver {
         System.out.println(printString);
     }
 
+    public static void testAdd() {
+        // 1. LOAD TEST CASES.
+        String[] addCases = {"999", "999"};
+        for (int i = 1; i < addCases.length; i++) {
+            InfiniteInt numOne = new InfiniteInt(addCases[i]);
+            InfiniteInt numTwo = new InfiniteInt(addCases[i-1]);
+            System.out.printf("Testing add... adding %s and %s, should equal: %d", addCases[i], addCases[i-1], 
+                Integer.sum(Integer.parseInt(addCases[i]), Integer.parseInt(addCases[i-1])));
+
+            InfiniteInt result = InfiniteInt.add(numOne, numTwo);
+            System.out.printf("The result is: %s", result.toString());
+            
+            print("Moving on to next test.");
+        }
+    }
 }

@@ -12,7 +12,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      *                                  DATA
      **************************************************************************/
     private StringTokenizer tokenizer;
-
+    
     /**************************************************************************
      *                               CONSTRUCTORS
      **************************************************************************/
@@ -35,7 +35,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
         while (tokenizer.hasMoreTokens()) {
             String token = tokenizer.nextToken();
 
-            if (token.matches("[A-Za-z]") == true) {
+            if (token.matches("[^0-9]") == true) {
                 System.out.println(token);
                 System.out.println("This string contains invalid characters.");
                 throw new IllegalArgumentException("Invalid Character!");
@@ -53,19 +53,29 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      * @return a string in the format: xxx,xxx,xxx,xxx for the given InfiniteInt.
      */
     public String toString() {
+        if (this.isEmpty()) {
+            throw new IllegalStateException("Cannot iterate over empty list.");
+        }
+
         String answer = "";
+    
         // stuff belongs here in the middle.
         DLLNode<Integer> cursor = this.head;
         while (cursor != null) {
 
             int numberString = cursor.data.intValue();
-            answer = answer.concat(String.format("%03d", numberString));
-            
+
+            if (cursor == this.head) {
+                answer = answer.concat(Integer.toString(numberString));
+            } else {
+                answer = answer.concat(String.format("%03d", numberString));
+            }
+
             if (cursor.next != null) {
                 answer = answer.concat(",");
             }
             cursor = cursor.next;
-        } 
+        }
         return answer; // DONE!
     }
 
@@ -98,7 +108,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      * @return true if the InfiniteInt is divisible by 5. 
      */
     public boolean isDivisibleBy5() {
-        return (this.tail.data.intValue() % 5 == 0);
+        return this.tail.data.intValue() % 5 == 0;
     }
 
     /**
@@ -106,7 +116,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
      * @return true if the InfinteInt is divisible by 1000.
      */
     public boolean isDivisibleBy1000() {
-        return (this.tail.data.intValue()) == 0 && (this.tail != this.head);
+        return this.tail.data.intValue() == 0;
     }
 
     /**
@@ -153,41 +163,10 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
         return sizeComparison;
     }
 
-    /**
-     * Adds two InfiniteInts together and returns the sum as an InfiniteInt.
-     * @param firstInt first InfinteInt to be added.
-     * @param secondInt second InfinteInt to be added.
-     * @return InfinteInt answer - The sum of the two ints.
-     */
-    // public static InfiniteInt add(InfiniteInt firstInt, InfinteInt secondInt) {
-    //     // 0. SET UP OUR ANSWER INFINITEINT FIRST.
-    //     InfiniteInt answer = new InfinteInt();
-    //     DLLNode<Integer> firstCursor = firstInt.tail;
-    //     DLLNode<Integer> secondCursor = secondInt.tail;
-        
-    //     // FIGURE OUT WHICH ONE IS LONGER:
-    //     int lengthComparison = Integer.compare(firstInt.size(), secondInt.size());
-    //     switch (lengthComparison) {
-    //         case 1: // first list is longer:
-    //             while (secondCursor.prev != null) {
-    //                 answer.addFirst(Integer.sum(firstInt.data, secondInt.data));
-    //                 // do stuff
-    //             }
-    //         case -1: // second list is longer:
-    //             while (firstCursor.prev != null) {
-    //                 // do stuff
-    //             }
-    //         default: // lists are the same length:
-    //             while (firstCursor.prev != null) {
-    //                 // do stuff
-    //             }
-    //     }
-    //     return answer;
-    // }
-
+    
     public static InfiniteInt add(InfiniteInt firstInt, InfiniteInt secondInt) {
         // 0. SETTING UP OUR RESPONSE LIST.
-        InfiniteInt reponse = new InfiniteInt();
+        InfiniteInt response = new InfiniteInt();
         int listComparison = Integer.compare(firstInt.size(), secondInt.size());
         
         switch (listComparison) {
@@ -199,6 +178,7 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
                 add(secondInt, firstInt, response);
                 break;
             default:
+                System.out.println("The lists are equal!");
                 add(firstInt, secondInt, response);
                 break;
         }
@@ -207,36 +187,62 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
     }
 
     private static void add(InfiniteInt longerInt, InfiniteInt shorterInt, InfiniteInt response) {
+
+        System.out.printf("Printing the superToString of each node: long: %s short: %s", longerInt.superToString(), shorterInt.superToString());
         // START ADDING FROM THE LONGER ONE.
         DLLNode<Integer> longCursor = longerInt.tail;
         DLLNode<Integer> shortCursor = shorterInt.tail;
+        
+        // System.out.printf("Long cursor's prev node: %s, short cursor's prev node: %s", longCursor.prev.toString(), shortCursor.prev.toString());
         int sum = 0;
         int carryOver = 0;
-        // START WALKING BACK FROM THE END OF THE LIST (smallest digits, just like how you add numbers in rea life.)
-        while (longCursor.prev != null) {
-            //  HANDLE IF THERE ARE EXTRA DECIMAL PLACES
-            if (shortCursor.data == null) {
-                response.addFirst(Integer.sum(longCursor.data, carryOver));
-            }
 
-            sum = ++carryOver; // ADDING THE CARRYOVER TO THE SUM BEFORE THE SUM IS RUINED.
-            carryOver = 0; // CARRY OVER HAS BEEN EXPENDED MOTHERFUCKER.
-            sum = sum + Integer.sum(longCursor.data, shortCursor.data); // ADDING THESE TWO GODDAMN NUMBERS TOGETHER.
-            System.out.printf("The sum of the two nodes is: %d\n\n", sum); // TELLING THE USER WHAT WE'VE ADDED
-            if (sum >= 1000) { // IF THE GODDAMN NUMBER IS TOO BIG, THEN SUBTRACT 1000, AND INCREMENT THE SUM
-                 // PARSE THE INT INTO THE CARRY, AND THE SUM.
+        // ADDING THE LEAST SIGNIFICANT DIGITS TOGTHER: (FOR TEST CASES WHERE THE LIST IS TOO SHORT)
+        if ((longerInt.size() == 1) && (shorterInt.size() == 1)) {
+            sum = Integer.sum(longCursor.data, shortCursor.data);
+
+            if (sum > 1000) {
                 carryOver = 1;
                 sum = sum - 1000;
             }
-            // NOW, WE HAVE OUR SWEET LIL' SUM THAT WE'RE GOING TO MAKE INTO OUR NODE.
             response.addFirst(sum);
-            // NOW GET TEAR ALL THIS SHIT DOWN AND GET IT READY FOR THE NEXT ITERATION
-            sum = 0;
-            longCursor = longCursor.prev;
-            if (shortCursor.data == null) {
-                continue;
+
+            if (carryOver > 0) {
+                response.addFirst(carryOver);
             }
-            shortCursor = shortCursor.prev;
-        } 
+        } else {
+            while (longCursor.prev != null) {
+                sum = carryOver + Integer.sum(longCursor.data, shortCursor.data);
+
+                if (sum > 1000) {
+                    carryOver = 1;
+                    sum = sum - 1000;
+                }
+                response.addFirst(sum);
+
+            }
+        
+
+        // while (longCursor.prev != null) {
+        //     System.out.printf("The sum is currently: %d and the carryOver is: %d", sum, carryOver);
+        //     sum = ++carryOver; 
+        //     carryOver = 0; 
+        //     sum = sum + Integer.sum(longCursor.data, shortCursor.data);
+        //     System.out.printf("The sum is %s", sum);
+        //     System.out.printf("The sum of the two nodes is: %d\n\n", sum); // TELLING THE USER WHAT WE'VE ADDED
+        //     if (sum >= 1000) { 
+                
+        //         carryOver = 1;
+        //         sum = sum - 1000;
+        //     }
+            
+        //     response.addLast(sum);
+        //     sum = 0;
+        //     longCursor = longCursor.prev;
+        //     if (shortCursor.data == null) {
+        //         continue;
+        //     }
+        //     shortCursor = shortCursor.prev;
+        // }
     }
 }
