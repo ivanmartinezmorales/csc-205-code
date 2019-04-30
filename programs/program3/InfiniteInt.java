@@ -169,84 +169,55 @@ public class InfiniteInt extends DLList<Integer> implements Comparable<InfiniteI
         return sizeComparison;
     }
 
+    /**
+     * Adds two InfiniteInts together piece by piece.
+     * 
+     * @param firstInt  the first InfiniteInt to be added.
+     * @param secondInt the second InfiniteInt to be added.
+     * @return InfiniteInt response, where the result is given.
+     */
     public static InfiniteInt add(InfiniteInt firstInt, InfiniteInt secondInt) {
-        // 0. SETTING UP OUR RESPONSE LIST.
-        InfiniteInt response = new InfiniteInt();
-        int listComparison = Integer.compare(firstInt.size(), secondInt.size());
-
-        switch (listComparison) {
-        case 1:
-            add(firstInt, secondInt, response);
-            break;
-
-        case -1:
-            add(secondInt, firstInt, response);
-            break;
-        default:
-            System.out.println("The lists are equal!");
-            add(firstInt, secondInt, response);
-            break;
-        }
-        return response;
-
-    }
-
-    private static void add(InfiniteInt longerInt, InfiniteInt shorterInt, InfiniteInt response) {
-        DLLNode<Integer> longCursor = longerInt.tail;
-        DLLNode<Integer> shortCursor = shorterInt.tail;
-
         int sum = 0;
-        int carryOver = 0;
+        int carry = 0;
 
-        if ((longerInt.size() == 1) && (shorterInt.size() == 1)) {
-            sum = Integer.sum(longCursor.data, shortCursor.data);
+        // CREATE OUR NEW LIST
+        InfiniteInt response = new InfiniteInt();
 
-            if (sum >= 1000) {
-                carryOver = 1;
-                sum = sum - 1000;
+        // SUMMON CURSORS
+        DLLNode<Integer> firstCursor = firstInt.tail;
+        DLLNode<Integer> secondCursor = secondInt.tail;
+
+        /**
+         * 3 DISTINCT CASES: 1. The cursors are both not null - in which case, we will
+         * add both numbers together 2. The first cursor is null - in which case, add
+         * the carry with the second cursor. 3. The second cursor is null - add the
+         * first cursor and the carry.
+         * 
+         * Lastly, if there are any remaining carry bits, then add those to the list
+         * too.
+         */
+        while (firstCursor != null || secondCursor != null) {
+            if (firstCursor != null && secondCursor != null) {
+                sum = (firstCursor.data + secondCursor.data + carry) % 1000;
+                carry = (firstCursor.data + secondCursor.data + carry) / 1000;
+                firstCursor = firstCursor.prev;
+                secondCursor = secondCursor.prev;
+            } else if (firstCursor == null && secondCursor != null) {
+                sum = (secondCursor.data + carry) % 1000;
+                carry = (secondCursor.data + carry) / 1000;
+                secondCursor = secondCursor.prev;
+            } else if (firstCursor != null && secondCursor == null) {
+                sum = (firstCursor.data + carry) % 1000;
+                carry = (firstCursor.data + carry) / 1000;
+                firstCursor = firstCursor.prev;
             }
             response.addFirst(sum);
-
-            if (carryOver > 0) {
-                response.addFirst(carryOver);
-            }
-        } else {
-
-            for (int i = 0; i < longerInt.size(); i++) {
-
-                if (shortCursor == null) {
-                    response.addFirst(longCursor.data + carryOver);
-                }
-                sum = carryOver + Integer.sum(longCursor.data, shortCursor.data);
-                if (sum >= 1000) {
-                    carryOver = 1;
-                    sum = sum - 1000;
-                } else {
-                    carryOver = 0;
-                }
-                response.addFirst(sum);
-                sum = 0;
-                if (longCursor.prev == null) {
-                    // we're at our last node, so add the carry together.
-                    int ultimateSum = Integer.sum(carryOver, longerInt.head.data);
-                    if (ultimateSum < 1000) {
-                        response.addFirst(ultimateSum);
-                    } else {
-                        response.addFirst(ultimateSum - 1000);
-                        response.addFirst(1);
-                    }
-                } else {
-                    longCursor = longCursor.prev;
-                }
-
-                shortCursor = shortCursor.prev;
-            }
-
         }
-    }
+        // Lastly, if our carry bit is 1 then we should prepend it to the list.
+        if (carry != 0) {
+            response.addFirst(carry);
+        }
 
-    // TODO: REMOVE THIS METHOD BEFORE TURNING IN ASSIGNMENT
-    public static void print(String printedString) {
-        System.out.println(printedString);
+        return response;
     }
 }

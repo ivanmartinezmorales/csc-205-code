@@ -70,7 +70,7 @@ public class InfiniteIntTester {
 
     public static void testAdd() {
         // 1. LOAD TEST CASES.
-        String[] addCases = { "1,001", "999" };
+        String[] addCases = { "1,001,000", "999" };
         for (int i = 1; i < addCases.length; i++) {
             InfiniteInt numOne = new InfiniteInt(addCases[i]);
             InfiniteInt numTwo = new InfiniteInt(addCases[i - 1]);
