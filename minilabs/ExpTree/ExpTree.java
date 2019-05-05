@@ -191,10 +191,50 @@ public class ExpTree {
 
     // ==================================
 
-    // evaluate - returns what it evaluates to
-    public double evaluate() {
-        return -999.9; // FAKE NUMBER FOR THIS "STUB"
-    }
+    	public double evaluate()
+	{
+		return recursiveEvaluate(root);
+	}
+	
+	// Recursiive version of evaluate()
+	private double recursiveEvaluate(ExpNode subTree) {
+		if (subTree == null) {
+			return 0;
+		}
+
+		if (subTree.left == null && subTree.right == null) {
+			return Double.parseDouble(subTree.data);
+		}
+
+		double leftVal = recursiveEvaluate(subTree.left);
+		double rightVal = recursiveEvaluate(subTree.right);
+
+		if (subTree.data.equals("+")) {
+			return leftVal + rightVal;
+		}
+		else if (subTree.data.equals("-")) {
+			return leftVal - rightVal;
+		}
+		else if (subTree.data.equals("*")) {
+			return leftVal * rightVal;
+		}
+		else if (subTree.data.equals("%")) {
+			if (rightVal == 0) {
+				throw new ArithmeticException("Cannot divide by 0.");
+			}
+			return leftVal % rightVal;
+		}
+		else if (subTree.data.equals("/")) {
+			if (rightVal == 0) {
+				throw new ArithmeticException("Cannot divide by 0.");
+			}
+			return leftVal / rightVal;
+
+		} else {
+			throw new ArithmeticException("Illegal Arithmetic operator.");
+		}
+		  
+	}
 
 }
 
